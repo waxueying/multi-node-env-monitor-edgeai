@@ -1,0 +1,47 @@
+# ---- local secrets ----
+secrets.h
+
+# ---- keil / mdk ----
+build/
+**/build/
+Objects/
+**/Objects/
+RTE/
+**/RTE/
+**/stm32f407vet6_Finalversion/
+*.o
+*.d
+*.crf
+*.axf
+*.hex
+*.lnp
+*.map
+*.dep
+*.lst
+*.htm
+*.uvguix*
+*.lock
+*.scvd
+EventRecorderStub.scvd
+
+# ---- editor / tooling ----
+.vscode/
+.settings/
+DebugConfig/
+__pycache__/
+*.log
+uv4.log*
+.sconsign.dblite
+.config
+.cproject
+.project
+_bak_uvprojx/
+_log/
+_trash_rt/
+*.bak
+dis.txt
+dis_app.txt
+
+# ---- misc ----
+dist/
+*.zip

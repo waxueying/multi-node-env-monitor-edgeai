@@ -1,0 +1,11 @@
+# ESP32-S3 N16R8 (16MB flash) - A/B OTA layout
+# Based on IDF partitions_two_ota.csv, resized for 16MB.
+#   A slot (ota_0): flash offset 0x020000 .. 0x21FFFF  (2MB)
+#   B slot (ota_1): flash offset 0x220000 .. 0x41FFFF  (2MB)
+# Name,      Type, SubType, Offset,   Size,     Flags
+nvs,         data, nvs,     0x9000,   0x6000,
+otadata,     data, ota,     0xF000,   0x2000,
+phy_init,    data, phy,     0x11000,  0x1000,
+ota_0,       app,  ota_0,   0x20000,  0x200000,
+ota_1,       app,  ota_1,   0x220000, 0x200000,
+storage,     data, spiffs,  0x420000, 0xBE0000,

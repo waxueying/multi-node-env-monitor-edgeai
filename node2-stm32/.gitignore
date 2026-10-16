@@ -1,0 +1,54 @@
+# ---- local secrets ----
+secrets.h
+
+# ---- keil / mdk build output ----
+build/
+*/build/
+**/build/
+Objects/
+**/Objects/
+RTE/
+**/RTE/
+**/stm32f407vet6_Finalversion/
+*.o
+*.crf
+*.d
+*.axf
+*.hex
+*.bin
+*.lnp
+*.map
+*.dep
+*.iex
+*.lst
+*.htm
+*.build_log.htm
+*.uvguix.*
+*.uvguix
+*.lock
+*.scvd
+EventRecorderStub.scvd
+
+# ---- editor / tooling ----
+.vscode/
+.eide/
+.cmsis/
+.ai/
+.mxproject
+DebugConfig/
+*.log
+*.log.txt
+uv4.log*
+
+# ---- misc ----
+dist/
+*.zip
+*.7z
+tool/
+
+# ---- vendor bloat kept out of the repo ----
+# CMSIS-DSP / CMSIS-NN sources are not compiled (X-CUBE-AI ships a prebuilt lib
+# for CM4), so they are not part of this repository. Re-add them from the
+# STM32Cube CLT / Keil pack if you ever need to rebuild the NN kernels.
+Drivers/CMSIS/DSP/
+Drivers/CMSIS/NN/

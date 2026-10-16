@@ -1,0 +1,20 @@
+# ---- local secrets (WiFi ssid/pass + Bemfa private key) ----
+components/service/include/secrets.h
+secrets.h
+
+# ---- esp-idf build output ----
+build/
+managed_components/
+dependencies.lock
+sdkconfig.old
+*.bin
+*.elf
+*.map
+
+# ---- editor ----
+.vscode/
+.devcontainer/
+__pycache__/
+*.pyc
+*.bak
+*.log

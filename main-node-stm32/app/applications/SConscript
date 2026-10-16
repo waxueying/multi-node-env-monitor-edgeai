@@ -1,0 +1,19 @@
+Import('RTT_ROOT')
+from building import *
+
+cwd = GetCurrentDir()
+
+src = Glob('*.c')
+
+CPPPATH = [cwd,
+           cwd + '/../drivers',
+           cwd + '/../drivers/include',
+           cwd + '/../drivers/include/config',
+           cwd + '/../libraries/CMSIS/Device/ST/STM32F4xx/Include',
+           cwd + '/../libraries/CMSIS/Include',
+           cwd + '/../libraries/STM32F4xx_HAL_Driver/Inc',
+           cwd + '/../libraries/STM32F4xx_HAL_Driver/Inc/Legacy']
+
+group = DefineGroup('Applications', src, depend = [''], CPPPATH = CPPPATH)
+
+Return('group')
