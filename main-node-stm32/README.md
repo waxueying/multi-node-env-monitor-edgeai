@@ -74,18 +74,6 @@ bootloader 只负责选区和跳转，**不做固件搬运**：
 3. bootloader 打开 `bootloader/maintest_boot.uvprojx` 编译
 4. 生成 B 区版本：复制 app 目录后改链接地址到 `0x08080000` 与 `VECT_TAB_OFFSET`，再编译
 
-## 踩过的坑
-
-1. **RT-Thread 时钟配置**：直接套用裸机版的 SysTick 配置会和内核节拍冲突，需按 RT-Thread 的 `RT_TICK_PER_SECOND` 重新配。
-2. **CAN 收不到数据**：先看 `list device` 里 `can1` 是否注册、再看中断与滤波器配置，最后才是波特率；
-   本项目最终定位到的是 CAN 模式与滤波器使能顺序问题。
-3. **MQTT 发不出去**：paho 内部用 512 字节管道把消息投递给 worker 线程，
-   worker 卡住时管道瞬间写满，日志会刷 `Publish failed`——本质是链路卡顿而不是丢包，
-   此时数据会被落盘补传，属于设计内行为。
-4. **SD 卡写挂系统**：SDIO + DMA 与中断优先级冲突会导致死锁，需要把 SD 操作放到独立线程并限制优先级。
-5. **OTA 读到一半 CRC 失败**：app 与 bootloader 的标志区结构必须完全一致，
-   版本号/大小也要和云端一致，否则会出现「下载完成但校验不过」的假故障。
-
 ## 安全说明
 
 WiFi 与 MQTT 配置存放在 `secrets.h`，已被 `.gitignore` 排除，仓库只保留 `secrets.template.h`。

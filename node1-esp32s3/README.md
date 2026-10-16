@@ -93,17 +93,6 @@ idf.py -p COMx flash monitor
 `main/capture.c` 是采集模式：串口发 0/1/2/3 切类别（idle / tap / push / hit），
 触发动作后自动导出 100 行 CSV，再交给 Python 训练脚本生成 TFLite 模型。
 
-## 踩过的坑
-
-1. **TFLite 输入张量形状**：先看 model_info.txt 的输入输出形状。一开始按 8 通道加时间窗喂数据，
-   实际模型是 [1,50,3] 的三轴加速度，喂错就会输出常数。
-2. **置信度恒为 0%**：典型原因是输入没做扣重力与归一化，训练与部署两侧的预处理必须完全一致。
-3. **I2C 失败刷屏**：MPU6050 掉线时 i2cdev 会反复重试打印，需要限制日志次数，否则串口被刷爆。
-4. **Wi-Fi 发射瞬间 Brownout 复位**：把发射功率从 20dBm 降到 11dBm 后稳定
-   （`wifi_ota.c` 里的 `esp_wifi_set_max_tx_power`）。
-5. **OTA 包必须是完整镜像**：上传的 bin 要包含 bootloader + 分区表 + 应用；
-   升级失败时靠 A/B 分区自动回滚，不会变砖。
-
 ## 安全说明
 
 WiFi 凭据与巴法云私钥放在 `components/service/include/secrets.h`，已被 .gitignore 排除；

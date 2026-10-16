@@ -93,19 +93,6 @@ typedef struct {
 4. 复位后串口应打印 `vtor=0x08040000 slot=B`，说明新固件已从 B 区运行
 5. 再复位一次，若 `active=B` 则自确认成功，升级完成
 
-## 踩过的坑（面试常问）
-
-1. **APP 链接地址没改**：CubeMX 生成的工程默认链接 0x08000000，做双区必须先改 scatter + Keil IROM，
-   否则 bootloader 跳过去就是 HardFault。
-2. **VTOR 忘了重定位**：不改 `SCB->VTOR`，中断向量还是从 0x08000000 取，一进中断就跑飞。
-3. **ESP8266 接收缓冲太小**：AT 固件的 `+IPD` 一帧可能上千字节，原工程 1KB 缓冲会截断，
-   HTTP 头和 body 跨帧时解析直接失败。扩容到 2KB 并单独做下载抓取缓冲后稳定。
-4. **HTTP 头必须和 body 一起解析**：只按 `Content-Length` 取字节会把 `+IPD,xxx:` 头也算进数据，
-   写进 Flash 的镜像就是坏的 → bootloader 校验不过自动回滚（这正好验证了回滚机制有效）。
-5. **bootloader 不能依赖复位后的干净状态**：Flash 错误标志、SysTick 使能位都可能在复位后残留，
-   必须显式清零再操作，否则第一次能跑、第二次就卡死。
-6. **FPU 要在 bootloader 里使能**（CPACR 的 CP10/CP11），否则带硬件浮点编译的库函数一执行就 UsageFault。
-
 ## 说明
 
 - 仓库只保留工程必需文件：Keil 中间产物（`*.o/.axf/.crf`）、构建目录、
